@@ -1,0 +1,31 @@
+<% include ../partials/header %>
+ 
+ <div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>Welcome to FieldJournal!</h1>
+            <p>View and contribute to our vast collection of biodiversity!</p>
+            <p>
+              <a class="btn btn-primary btn-lg" href="/libraries/new">Add New library</a>
+            </p>
+        </div>
+    </header>
+
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+      <% libraries.forEach(function(library){ %>
+        <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+                <img src="<%= library.image %>">
+                <div class="caption">
+                    <h4><%= library.name %></h4>
+                </div>
+                <p>
+                    <a href="/libraries/<%=library._id%>" class="btn btn-primary">More Info</a>
+                </p>
+            </div>
+        </div>
+      <% }); %>
+    </div>
+</div>
+
+<% include ../partials/footer %>

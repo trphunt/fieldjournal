@@ -1,0 +1,59 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">FieldJournal</p>
+            <div class="list-group">
+                <li class="list-group-item active">Info 1</li>
+                <li class="list-group-item">Info 2</li>
+                <li class="list-group-item">Info 3</li>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= library.image %>">
+                <div class="caption-full">
+                    <h4><a><%=library.name%></a></h4>
+                    <p><%= library.description %></p>
+                    <p>
+                        <em>Submitted By <%= library.author.username  %></em>
+                    </p>
+                    <% if(currentUser && library.author.id.equals(currentUser._id)){ %>
+                        <a class="btn btn-warning" href="/libraries/<%= library._id %>/edit">Edit</a>
+                        <form class="delete-form" action="/libraries/<%=library._id%>?_method=DELETE" method="POST">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    <% }; %>
+                </div>
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/libraries/<%= library._id %>/entries/new">Add New entry</a>
+                </div>
+                <hr>
+                <% library.entries.forEach(function(entry){ %>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%= entry.author.username %></strong>
+                            <span class="pull-right">10 days ago</span>
+                            <p>
+                                <%= entry.text %>
+                            </p>
+                            <% if(currentUser && entry.author.id.equals(currentUser._id)){ %>
+                                <a class="btn btn-xs btn-warning"
+                                    href="/libraries/<%= library._id %>/entries/<%= entry._id %>/edit">Edit
+                                </a>
+                                <form class="delete-form" action="/libraries/<%= library.id %>/entries/<%= entry._id %>?_method=DELETE" method="POST">
+                                    <input type="submit" class="btn btn-xs btn-danger" value="Delete">
+                                </form>
+                            <% }; %>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include ../partials/footer %>
